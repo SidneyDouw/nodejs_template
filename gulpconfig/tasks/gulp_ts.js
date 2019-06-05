@@ -1,4 +1,4 @@
-module.exports = function() {
+module.exports = function(gulp, plugins, config) {
 
 	gulp.src(config.paths.src.ts)
 	.pipe(plugins.tslint());

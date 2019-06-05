@@ -1,4 +1,4 @@
-module.exports = function() {
+module.exports = function(gulp, plugins, config) {
 
 	return plugins.nodemon({
 		script: config.paths.src.nodemon,

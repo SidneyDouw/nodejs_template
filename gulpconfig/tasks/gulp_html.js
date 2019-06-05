@@ -1,4 +1,4 @@
-module.exports = function() {
+module.exports = function(gulp, plugins, config) {
 
 	let timestamp = Date.now();
 

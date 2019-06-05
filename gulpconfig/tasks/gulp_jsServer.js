@@ -1,4 +1,4 @@
-module.exports = function() {
+module.exports = function(gulp, plugins, config) {
 
 	return gulp.src(config.paths.src.jsServer)
 	.pipe(plugins.jshint({
