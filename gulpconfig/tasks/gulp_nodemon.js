@@ -1,4 +1,4 @@
-module.exports = function(gulp, plugins, config) {
+module.exports = function(gulp, plugins, config, args) {
 
 	return plugins.nodemon({
 		script: config.paths.src.nodemon,
@@ -6,15 +6,15 @@ module.exports = function(gulp, plugins, config) {
 			config.paths.src.root, 
 			config.paths.dest.root,
 			'gulpfile.js',
-			'gulp-config.js'
+			'./gulpconfig/'
 		]
 		// watch: config.paths.src.nodemon
 	})
 	.on('start', function() {
-		jsServer();
+		args[0]();
 		setTimeout(() => {
 			plugins.browserSync.reload({stream: false});
-		}, 2000);
+		}, 1000);
 	});
 
 };

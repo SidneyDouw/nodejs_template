@@ -5,8 +5,8 @@ const config  = require('./gulpconfig/gulp-config');
 
 // Tasks
 
-function loadPlugin(file) {
-	return require(file).bind(null, gulp, plugins, config)
+function loadPlugin(file, args) {
+	return require(file).bind(null, gulp, plugins, config, args)
 }
 
 const audio = loadPlugin('./gulpconfig/tasks/gulp_audio')
@@ -18,7 +18,7 @@ const img = loadPlugin('./gulpconfig/tasks/gulp_img')
 const js = loadPlugin('./gulpconfig/tasks/gulp_js')
 const jsServer = loadPlugin('./gulpconfig/tasks/gulp_jsServer')
 const less = loadPlugin('./gulpconfig/tasks/gulp_less')
-const nodemon = loadPlugin('./gulpconfig/tasks/gulp_nodemon')
+const nodemon = loadPlugin('./gulpconfig/tasks/gulp_nodemon', [jsServer])
 const pug = loadPlugin('./gulpconfig/tasks/gulp_pug')
 const ts = loadPlugin('./gulpconfig/tasks/gulp_ts')
 
@@ -75,8 +75,4 @@ gulp.task('watch', function(done) {
 
 });
 
-gulp.task('default', function(done) {
-	gulp.parallel('browserSync', 'nodemon', 'watch')
-
-	return done()
-});
+gulp.task('default', gulp.parallel('browserSync', 'nodemon', 'watch'));
