@@ -3,6 +3,8 @@ const plugins = require('./gulpconfig/gulp-plugins').plugins
 
 const config  = require('./gulpconfig/gulp-config');
 
+const fs = require('fs')
+
 // Tasks
 
 function loadPlugin(file, args) {
@@ -33,6 +35,16 @@ gulp.task('plugins', function(done) {
 	return done();
 });
 
+gulp.task('buildVersion', function(done) {
+	
+	let buildVersion = parseInt(fs.readFileSync('./gulpconfig/buildVersion', 'utf-8')) + 1
+	fs.writeFileSync('./gulpconfig/buildVersion', '' + buildVersion)
+
+	config.buildVersion = buildVersion
+	
+	return done();
+})
+
 
 gulp.task('clear', clear);
 
@@ -48,16 +60,16 @@ gulp.task('audio', audio);
 gulp.task('nodemon', nodemon);
 
 
-gulp.task('build', gulp.series('clear', gulp.parallel(
+gulp.task('build', gulp.series('clear', 'buildVersion', gulp.parallel(
 	// 'html",'
 	'pug', 
 	'less',
 	// 'js',
 	'ts', 
 	'jsServer', 
-	'img', 
-	'font', 
-	'audio'
+	// 'img', 
+	// 'font', 
+	// 'audio'
 )));
 
 gulp.task('browserSync', gulp.series('build', browserSync));
@@ -69,7 +81,7 @@ gulp.task('watch', function(done) {
 	gulp.watch(config.paths.src.less, gulp.parallel('less'));
 	// gulp.watch(config.paths.src.js, gulp.parallel('js'));
 	gulp.watch(config.paths.src.ts, gulp.parallel('ts'));
-	gulp.watch(config.paths.src.img, gulp.parallel('img'));
+	// gulp.watch(config.paths.src.img, gulp.parallel('img'));
 
 	return done();
 

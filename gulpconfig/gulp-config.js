@@ -1,6 +1,5 @@
 const MinifyPlugin = require("babel-minify-webpack-plugin");
 
-
 const prod = (process.argv[3] == '-p' || process.argv[3] == '--production') ? true : false;
 
 let webPackSourcemaps;
@@ -41,13 +40,15 @@ module.exports = {
 		},
 		files: {
 			css: 'styles.min.css',
-			js: '[name].min.js'
+			js: 'index.min.js'
 		}
     },
     
 	browserSync: {
 		// server: 'dist/'
-		proxy: 'localhost:8080'
+		proxy: 'localhost:8080',
+		port: 3000,
+		https: true
 	},
 	
 	mainBowerFiles: {
@@ -88,6 +89,8 @@ module.exports = {
 		plugins: [
 			new MinifyPlugin()
 		]
-    }
+	},
+
+	isProduction: prod
     
 };
