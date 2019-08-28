@@ -50,15 +50,7 @@ module.exports = {
 		port: 3000,
 		https: true
 	},
-	
-	mainBowerFiles: {
-		paths: {
-			bowerDirectory: '../../bower_components',
-			bowerJson: './bower.json'
-		},
-		overrides: {}
-	},
-    
+	    
 	webpack: {
 		entry: {
 			js: {
