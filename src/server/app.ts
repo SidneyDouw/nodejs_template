@@ -1,16 +1,18 @@
-const express = require('express')
+import express from 'express'
+import fs from 'fs'
+
 const app = express()
 
-const fs = require('fs')
 
 // Pug Setup
 
 app.set('view engine', 'pug')
-app.set('views', 'src/views/dnamic/')
+app.set('views', 'dist/views/dynamic/')
+
 
 // Routes
 
-app.use(express.static('dist/'))
+app.use(express.static('dist/client/'))
 
 app.get('/dynamic', (req, res) => {
 
@@ -21,6 +23,7 @@ app.get('/dynamic', (req, res) => {
 	})
 
 })
+
 
 // Start app
 

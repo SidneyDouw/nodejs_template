@@ -12,56 +12,58 @@ if (prod) {
 }
 
 
-module.exports = {
+let Configuration = function() {
 
-	paths: {
-		src: {
-			root:		'src/',
-            html: 		'src/*.html',
-            pug: 		'src/views/*.pug',
-            less:   	'src/less/*.less',
-			js: 		'src/js/*.js',
-			ts:			'src/ts/*.ts',
-			jsMain: 	'src/js/*.js',
-			tsMain:		'src/ts/*.ts',
-			jsServer:	'server/**/*.js',
-			img:		'src/img/**/*',
-			font:		'src/fonts/**/*',
-			audio:		'src/audio/**/*',
-			nodemon:	'server/app.js'
-		},
-		dest: {
-			root: 		'dist/',
-            css:    	'dist/css/',
-			js: 		'dist/js/',
-			img:		'dist/img/',
-			font:		'dist/fonts/',
-			audio:		'dist/audio/'
-		},
-		files: {
-			css: 'styles.min.css',
-			js: 'index.min.js'
-		}
-    },
-    
-	browserSync: {
-		// server: 'dist/'
-		proxy: 'localhost:8080',
-		port: 3000,
-		https: true
-	},
-	    
-	webpack: {
-		entry: {
-			js: {
-				index: './src/js/index.js',
+		this.paths = {
+			src: {
+				html: 		'src/client/html/**/*.html',
+				pug: 		'src/pug/**/*.pug',
+				less:   	'src/client/less/**/*.less',
+				// js: 		'src/client/js/**/*.js',
+				ts:			'src/client/ts/**/*.ts',
+				// jsServer:	'src/server/**/*.js',
+				tsServer:	'src/server/**/*.ts',
+				img:		'src/client/img/**/*',
+				font:		'src/client/fonts/**/*',
+				audio:		'src/client/audio/**/*',
 			},
-			ts: {
-				index: './src/ts/index.ts'
+			dest: {
+				root: 		'dist/',
+				client:		'dist/client/',
+				server:		'dist/server/',
+				views:		'dist/views/',
+				css:    	'dist/client/css/',
+				js: 		'dist/client/js/',
+				img:		'dist/client/img/',
+				font:		'dist/client/fonts/',
+				audio:		'dist/client/audio/'
+			},
+			files: {
+				css: 'styles.min.css',
+				js: 'index.min.js'
 			}
-		},
-		module: {
-			rules: [{
+		}
+		
+		this.browserSync = {
+			// server: 'dist/'
+			proxy: 'localhost:8080',
+			port: 3000,
+			https: true
+		}
+			
+		this.webpack = {
+			entry: {
+				js: {
+					index: './src/client/js/index.js',
+					// index2: ./src/client/js/index2.js
+				},
+				ts: {
+					index: './src/client/ts/index.ts',
+					// index2: ./src/client/ts/index2.ts
+				}
+			},
+			module: {
+				rules: [{
 					test: /\.ts?$/,
 					exclude: /node_modules/,
 					use: [{
@@ -69,20 +71,23 @@ module.exports = {
 						options: {}
 					}],
 				}]
-		},
-		resolve: {
-			extensions: ['.ts', '.js']
-		},
-		output: {
-			filename: '[name].min.js'
-		},
-		mode: prod ? 'production' : 'development',
-		devtool: webPackSourcemaps,
-		plugins: [
-			new MinifyPlugin()
-		]
-	},
+			},
+			resolve: {
+				extensions: ['.ts', '.js']
+			},
+			output: {
+				filename: '[name].min.js'
+			},
+			mode: prod ? 'production' : 'development',
+			devtool: webPackSourcemaps,
+			plugins: [
+				new MinifyPlugin()
+			]
+		}
 
-	isProduction: prod
-    
-};
+		this.isProduction = prod
+		
+}
+
+
+module.exports = new Configuration()

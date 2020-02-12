@@ -5,5 +5,6 @@ module.exports = function(gulp, plugins, config) {
 		esversion: 6,
 		asi: true
 	}))
-	.pipe(plugins.jshint.reporter('jshint-stylish'));
+	.pipe(plugins.jshint.reporter('jshint-stylish'))
+	.pipe(gulp.dest(config.paths.dest.server))
 };

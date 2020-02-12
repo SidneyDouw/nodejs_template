@@ -1,14 +1,30 @@
-const gulp = require('./gulpconfig/gulp-plugins').gulp
-const plugins = require('./gulpconfig/gulp-plugins').plugins
+const gulp = require('./gulpconfig/tasks/gulp_plugins').gulp
+const plugins = require('./gulpconfig/tasks/gulp_plugins').plugins
 
 const config  = require('./gulpconfig/gulp-config');
 
 const fs = require('fs')
+const glob = require('glob')
 
 // Tasks
 
-function loadPlugin(file, args) {
-	return require(file).bind(null, gulp, plugins, config, args)
+function loadPlugin(file) {
+	return require(file).bind(null, gulp, plugins, config)
+}
+
+
+function getTaskList() {
+
+	let arr = []
+
+	for (let taskType in config.paths.src) {		
+		if (glob.sync(config.paths.src[taskType]).length > 0) {
+			arr.push(taskType)
+		}
+	}
+
+	return arr
+
 }
 
 const audio = loadPlugin('./gulpconfig/tasks/gulp_audio')
@@ -19,8 +35,9 @@ const html = loadPlugin('./gulpconfig/tasks/gulp_html')
 const img = loadPlugin('./gulpconfig/tasks/gulp_img')
 const js = loadPlugin('./gulpconfig/tasks/gulp_js')
 const jsServer = loadPlugin('./gulpconfig/tasks/gulp_jsServer')
+const tsServer = loadPlugin('./gulpconfig/tasks/gulp_tsServer')
 const less = loadPlugin('./gulpconfig/tasks/gulp_less')
-const nodemon = loadPlugin('./gulpconfig/tasks/gulp_nodemon', [jsServer])
+const nodemon = loadPlugin('./gulpconfig/tasks/gulp_nodemon')
 const pug = loadPlugin('./gulpconfig/tasks/gulp_pug')
 const ts = loadPlugin('./gulpconfig/tasks/gulp_ts')
 
@@ -54,37 +71,30 @@ gulp.task('less', less);
 gulp.task('js', js);
 gulp.task('ts', ts);
 gulp.task('jsServer', jsServer);
+gulp.task('tsServer', tsServer);
 gulp.task('img', img);
 gulp.task('font', font);
 gulp.task('audio', audio);
+
 gulp.task('nodemon', nodemon);
+gulp.task('browserSync', browserSync);
 
 
-gulp.task('build', gulp.series('clear', 'buildVersion', gulp.parallel(
-	// 'html",'
-	'pug', 
-	'less',
-	// 'js',
-	'ts', 
-	'jsServer', 
-	// 'img', 
-	// 'font', 
-	// 'audio'
-)));
+gulp.task('build', gulp.series('clear', 'buildVersion', gulp.parallel(getTaskList())))
 
-gulp.task('browserSync', gulp.series('build', browserSync));
 
 gulp.task('watch', function(done) {
 
-	// gulp.watch(config.paths.src.html, gulp.parallel('html'));
-	gulp.watch('src/**/*.pug', gulp.parallel('pug'));
-	gulp.watch(config.paths.src.less, gulp.parallel('less'));
-	// gulp.watch(config.paths.src.js, gulp.parallel('js'));
-	gulp.watch(config.paths.src.ts, gulp.parallel('ts'));
-	// gulp.watch(config.paths.src.img, gulp.parallel('img'));
+	let taskList = getTaskList()
+
+	for (let taskName of taskList) {
+
+		gulp.watch(config.paths.src[taskName], gulp.parallel(taskName));
+
+	}
 
 	return done();
 
 });
 
-gulp.task('default', gulp.parallel('browserSync', 'nodemon', 'watch'));
+gulp.task('default', gulp.series('build', gulp.parallel('browserSync', 'nodemon', 'watch')));

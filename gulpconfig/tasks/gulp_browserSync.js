@@ -1,4 +1,4 @@
-module.exports = function(gulp, plugins, config) {
+module.exports = async function(gulp, plugins, config, done) {
 	
 	return plugins.browserSync.init(config.browserSync);
     

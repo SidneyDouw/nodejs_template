@@ -10,7 +10,7 @@ module.exports = function(gulp, plugins, config) {
 		config.webpack.entry = config.webpack.entry.js;
 	}
 
-	return gulp.src(config.paths.src.jsMain)
+	return gulp.src(config.paths.src.js)
 	.pipe(plugins.webpackStream(config.webpack, plugins.webpack))
 	.on('error', function() {
 		this.emit('end');
