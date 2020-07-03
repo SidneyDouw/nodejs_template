@@ -29,6 +29,6 @@ app.use('/dynamic', route_dynamic)
 
 const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 8080
 
-app.listen(8080, 'localhost', () => {
-    console.log('Server started. Listening on Port 8080')
+app.listen(PORT, 'localhost', () => {
+    console.log(`Server started. Listening on Port ${PORT}`)
 })
