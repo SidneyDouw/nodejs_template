@@ -1,8 +1,12 @@
 import express from 'express'
+import dotenv from 'dotenv'
 
+// Middlewares
+import buildversion from './middleware/buildversion'
+
+// Routes
 import route_dynamic from './routes/dynamic'
 
-import dotenv from 'dotenv'
 dotenv.config()
 
 const app = express()
@@ -11,6 +15,10 @@ const app = express()
 
 app.set('view engine', 'pug')
 app.set('views', 'dist/views/dynamic/')
+
+// Middlewares
+
+app.use(buildversion)
 
 // Routes
 
