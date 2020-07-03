@@ -4,12 +4,12 @@
         "target": "es5",
         "sourceMap": true,
         "noImplicitAny": true,
+        "strictNullChecks": true,
         "removeComments": true,
         "preserveConstEnums": true,
+        "esModuleInterop": true,
+        "downlevelIteration": true,
         "lib": ["es2016", "dom"]
     },
-    "exclude": [
-        "node_modules",
-        "src/server"
-    ]
+    "exclude": ["node_modules"]
 }
