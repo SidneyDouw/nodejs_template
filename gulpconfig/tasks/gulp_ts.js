@@ -8,8 +8,8 @@ module.exports = function (gulp, plugins, config) {
     return gulp
         .src(config.paths.src.ts)
         .pipe(plugins.webpackStream(config.webpack, plugins.webpack))
-        .on('error', function () {
-            this.emit('end')
+        .on('error', function (err) {
+            config.isProduction ? done(err) : this.emit('end')
         })
         .pipe(gulp.dest(config.paths.dest.js))
         .pipe(plugins.browserSync.stream())

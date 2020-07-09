@@ -37,8 +37,8 @@ module.exports = function (gulp, plugins, config) {
                 },
             }),
         )
-        .on('error', function () {
-            this.emit('end')
+        .on('error', function (err) {
+            config.isProduction ? done(err) : this.emit('end')
         })
         .pipe(gulp.dest(config.paths.dest.client))
         .pipe(plugins.browserSync.stream())

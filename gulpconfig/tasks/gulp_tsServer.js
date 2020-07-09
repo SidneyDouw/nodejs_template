@@ -13,8 +13,8 @@ module.exports = function (gulp, plugins, config) {
                 lib: ['es2016'],
             }),
         )
-        .on('error', function () {
-            this.emit('end')
+        .on('error', function (err) {
+            config.isProduction ? done(err) : this.emit('end')
         })
         .pipe(plugins.if(!config.isProduction, plugins.sourcemaps.write()))
         .pipe(gulp.dest(config.paths.dest.server))

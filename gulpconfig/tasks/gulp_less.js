@@ -11,8 +11,8 @@ module.exports = function (gulp, plugins, config) {
         .pipe(plugins.concat(config.paths.files.css))
         .pipe(plugins.if(!config.isProduction, plugins.sourcemaps.init()))
         .pipe(plugins.less())
-        .on('error', function () {
-            this.emit('end')
+        .on('error', function (err) {
+            config.isProduction ? done(err) : this.emit('end')
         })
         .pipe(plugins.cleanCss())
         .pipe(plugins.if(!config.isProduction, plugins.sourcemaps.write()))
