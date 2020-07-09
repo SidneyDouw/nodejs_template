@@ -1,6 +1,6 @@
 const glob = require('glob')
 
-module.exports = function (gulp, plugins, config) {
+module.exports = function (gulp, plugins, config, done) {
     let fileArr = glob.sync(config.paths.src.pug)
 
     // Filter pug files

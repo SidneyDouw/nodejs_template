@@ -1,4 +1,4 @@
-module.exports = function (gulp, plugins, config) {
+module.exports = function (gulp, plugins, config, done) {
     return gulp
         .src(config.paths.src.less)
         .pipe(

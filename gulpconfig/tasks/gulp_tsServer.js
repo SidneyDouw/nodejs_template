@@ -1,6 +1,6 @@
 const fs = require('fs')
 
-module.exports = function (gulp, plugins, config) {
+module.exports = function (gulp, plugins, config, done) {
     let tsConfig = JSON.parse(fs.readFileSync(process.cwd() + '/tsconfig.json', 'utf8'))
 
     return gulp
@@ -10,6 +10,7 @@ module.exports = function (gulp, plugins, config) {
         .pipe(
             plugins.typescript({
                 ...tsConfig.compilerOptions,
+                typeRoots: ['src/@types'],
                 lib: ['es2016'],
             }),
         )
