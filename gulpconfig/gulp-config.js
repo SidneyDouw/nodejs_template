@@ -17,7 +17,7 @@ let Configuration = function () {
             // jsServer:	'src/server/**/*.js',
             tsServer: 'src/server/**/*.ts',
             // img: 'src/client/img/**/*',
-            assets: 'src/client/assets/**/*',
+            // assets: 'src/client/assets/**/*',
         },
         dest: {
             root: 'dist/',
