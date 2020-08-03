@@ -56,7 +56,7 @@ let Configuration = function () {
         module: {
             rules: [
                 {
-                    test: /\.ts?$/,
+                    test: /^(?!.*\.(test|spec)\.ts$).*\.ts$/,
                     exclude: /node_modules/,
                     use: [
                         {
